@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
 // mock
-import account from '../../../_mock/account';
+import getAccount from '../../../_mock/account';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 // components
@@ -36,6 +36,8 @@ Nav.propTypes = {
 
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
+  const app = JSON.parse(localStorage.getItem('app'));
+  const account  =  getAccount(app);
 
   const isDesktop = useResponsive('up', 'lg');
 

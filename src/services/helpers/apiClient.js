@@ -12,7 +12,7 @@ class APIClient {
     /**
      * Fetches data from given url
      */
-    get = async (url, params) => {
+    static async get(url, params) {
         try {
             const response = await fetch(config.API_URL + url + new URLSearchParams(params), {
                 method: 'GET',
@@ -21,13 +21,14 @@ class APIClient {
             return await response.json();
         } catch (error) {
             console.log("error", error)
+            return error
         }
     }
 
     /**
      * post given data to url
      */
-    post = async (url, data) => {
+    static async  post(url, data) {
         try {
             const response = await fetch(config.API_URL + url, {
                 method: 'POST',
@@ -37,13 +38,14 @@ class APIClient {
             return await response.json();
         } catch (error) {
             console.log("error", error)
+            return error
         }
     }
 
     /**
      * Updates data
      */
-    patch = async (url, data) => {
+    static async patch(url, data){
         try {
             const response = await fetch(config.API_URL + url, {
                 method: 'PATCH',
@@ -53,6 +55,7 @@ class APIClient {
             return await response.json();
         } catch (error) {
             console.log("error", error)
+            return error
         }
 
     }
@@ -60,7 +63,7 @@ class APIClient {
     /**
      * Update though put
      */
-    put = async (url, data) => {
+    static async  put (url, data) {
         try {
             const response = await fetch(config.API_URL + url, {
                 method: 'PUT',
@@ -70,12 +73,14 @@ class APIClient {
             return await response.json();
         } catch (error) {
             console.log("error", error)
+            return error
         }
     }
+
     /**
      * Delete
      */
-    delete = async (url) => {
+    static async delete(url) {
         try {
             const response = await fetch(config.API_URL + url, {
                 method: 'DELETE',
@@ -84,6 +89,7 @@ class APIClient {
             return await response.json();
         } catch (error) {
             console.log("error", error)
+            return error
         }
     }
 }

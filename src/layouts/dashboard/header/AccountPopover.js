@@ -2,30 +2,53 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
-import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
+import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover, Modal } from '@mui/material';
 // mocks_
-import account from '../../../_mock/account';
-import { getAnalytics, logout } from '../../../services/api/index';
-
+import getAccount from '../../../_mock/account';
+import { logout } from '../../../services/api/index';
+// components
+import { LoginForm } from '../../../sections/auth/login';
 
 const MENU_OPTIONS = [
   {
-    label: 'Update Dashboard',
+    label: 'Get New Analytics',
     icon: 'eva:home-fill',
   }
 ];
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 450,
+  bgcolor: 'background.paper',
+  borderRadius: '10px',
+  border: '2px solid #fff',
+  boxShadow: 24,
+  py: 6,
+  px: 6,
+};
 
 export default function AccountPopover() {
+  const app = JSON.parse(localStorage.getItem('app'));
+  const account = getAccount(app)
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
-  const app = JSON.parse(localStorage.getItem('app'));
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    console.log('open called')
+    setOpenModal(true)
+  };
+  const handleCloseModal = () => setOpenModal(false);
+
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
 
   const handleClose = async (option) => {
-    if(option.label === 'Update Dashboard'){
-      await updateDashboard();
+    if(option.label === 'Get New Analytics'){
+      handleOpenModal()
     }
     if(option.label === 'Logout'){
       await handleLogout();
@@ -33,9 +56,6 @@ export default function AccountPopover() {
     setOpen(null);
   };
 
-  const updateDashboard = async () => {
-    await getAnalytics(app);
-  }
   const handleLogout = async () => {
     await logout();
     navigate('/login', { replace: true });
@@ -106,7 +126,19 @@ export default function AccountPopover() {
         <MenuItem onClick={() => handleClose({label: 'Logout'})} sx={{ m: 1 }}>
           Logout
         </MenuItem>
+
+
       </Popover>
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <LoginForm />
+        </Box>
+      </Modal>
     </>
   );
 }

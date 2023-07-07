@@ -72,7 +72,7 @@ export default function LoginPage() {
               ANALYTIC DASHBOARD
             </Typography>
 
-            <LoginForm />
+            <LoginForm isLogin />
           </StyledContent>
         </Container>
       </StyledRoot>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 // @mui
 import { Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -8,7 +9,7 @@ import Iconify from '../../../components/iconify';
 import { getAnalytics } from '../../../services/api/index';
 
 
-const LoginForm = () => {
+const LoginForm = ({ isLogin }) => {
   const navigate = useNavigate();
 
   const [showApiKey, setShowApiKey] = useState(false);
@@ -43,7 +44,7 @@ const LoginForm = () => {
       <Stack spacing={3}>
         <TextField name="appId" label="APP ID"  onChange={handleChange} />
 
-        <TextField
+       {isLogin ? <TextField
           name="apiKey"
           label="API KEY"
           onChange={handleChange}
@@ -57,14 +58,24 @@ const LoginForm = () => {
               </InputAdornment>
             ),
           }}
-        />
+        /> : <TextField
+        name="apiKey"
+        label="API KEY"
+        onChange={handleChange}
+        type={'text' }
+      /> }
       </Stack>
 
       <LoadingButton loading={loading} sx={{ mt: 5 }} fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
-        Login
+       {isLogin ? "LOGIN" : "GET ANALYTICS"}
       </LoadingButton>
     </>
   );
 }
+
+
+LoginForm.propTypes = {
+  isLogin: PropTypes.bool
+};
 
 export default LoginForm;
