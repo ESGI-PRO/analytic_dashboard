@@ -9,19 +9,12 @@ const getHeaders = async () => {
 }
 
 class APIClient {
-    constructor() {
-        this.get = this.get.bind(this);
-        this.post = this.post.bind(this);
-        this.patch = this.patch.bind(this);
-        this.put = this.put.bind(this);
-        this.delete = this.delete.bind(this);
-    }
 
     /**
      * Fetches data from given url
      */
 
-     get = async (url, params) => {
+    async get(url, params) {
         try {
             const response = await fetch(config.API_URL + url + new URLSearchParams(params), {
                 method: 'GET',
@@ -38,7 +31,7 @@ class APIClient {
      * post given data to url
      */
 
-      post = async (url, data) => {
+    async post(url, data){
         try {
             const response = await fetch(config.API_URL + url, {
                 method: 'POST',
@@ -56,7 +49,7 @@ class APIClient {
      * Updates data
      */
 
-     patch = async (url, data) => {
+    async patch (url, data){
         try {
             const response = await fetch(config.API_URL + url, {
                 method: 'PATCH',
@@ -75,7 +68,7 @@ class APIClient {
      * Update though put
      */
 
-    put = async (url, data) => {
+    async  put(url, data){
         try {
             const response = await fetch(config.API_URL + url, {
                 method: 'PUT',
@@ -93,7 +86,7 @@ class APIClient {
      * Delete
      */
     
-     delete = async(url) => {
+    async delete (url) {
         try {
             const response = await fetch(config.API_URL + url, {
                 method: 'DELETE',
